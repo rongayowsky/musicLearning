@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+from sqliteFunctions import #stuff here
 # import errno
 # import os
 # from os import path
@@ -23,10 +24,8 @@ parser.add_argument('-s', '--song', type=str, required=False, nargs='?',
                     help='The song to be affected')
 parser.add_argument('-a', '--artist', type=str, required=False, nargs='?',
                     help='The artist of the song. Optional.')
-parser.add_argument('-l', '--link', type=str, required=False, nargs='?',
-                    help='A link to material on the internet. Optional.')
-parser.add_argument('-f', '--file', type=str, required=False, nargs='?',
-                    help='A filepath to material on your local machine. Optional.')
+parser.add_argument('-c', '--content', type=str, required=False, nargs='?',
+                    help='A filepath or URL of the chosen content. Optional.')
 args = parser.parse_args()
 
 # Validate user input, select which function will be run.
