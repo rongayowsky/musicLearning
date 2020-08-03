@@ -3,7 +3,6 @@ A Python tool that allows for easy storage and opening of material used for lear
 
 ## Task List
 Fill in SQLite functions in sqliteFunctions.py
-- initialize
 - add
 - edit
 - print

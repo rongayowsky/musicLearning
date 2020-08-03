@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
 
 import argparse
-from sqliteFunctions import #stuff here
+import db
 # import errno
-# import os
-# from os import path
+import os
+from pathlib import Path
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s:%(levelname)s:%(message)s"
+)
 
 # Define argument parser
 help_description =  """
@@ -30,6 +36,12 @@ args = parser.parse_args()
 
 # Validate user input, select which function will be run.
 def main():
+    # Get the working directory and initialize the database
+    cur_dir = Path(os.path.dirname(os.path.realpath(__file__)))
+    db_filepath = cur_dir / "ml.db"
+    logging.info("db_filepath = {}".format(db_filepath))
+    db.initialize_DB(db_filepath.__str__())
+    
     if args.display:
         display_songs()
     elif not args.song:
