@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
-import db
+import music_db
 # import errno
 import os
-from pathlib import Path
 import logging
 
 logging.basicConfig(
@@ -35,19 +34,13 @@ parser.add_argument('-c', '--content', type=str, required=False, nargs='?',
 args = parser.parse_args()
 
 # Validate user input, select which function will be run.
-def main():
-    # Get the working directory and initialize the database
-    cur_dir = Path(os.path.dirname(os.path.realpath(__file__)))
-    db_filepath = cur_dir / "ml.db"
-    logging.info("db_filepath = {}".format(db_filepath))
-    db.initialize_DB(db_filepath.__str__())
-    
+def main():    
     if args.display:
         display_songs()
     elif not args.song:
         print('A song argument must be provided for this operation.')
     elif args.add:
-        add()
+        music_db.add_record(args.song, args.artist, args.content)
     elif args.edit:
         edit()
     elif args.remove:

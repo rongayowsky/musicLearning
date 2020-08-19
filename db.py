@@ -7,55 +7,43 @@ logging.basicConfig(
     format="%(asctime)s:%(levelname)s:%(message)s"
 )
 
-# This is a simple database with two tables; a song table, and a content table.
-# The content table references the song it's related to. The song table does not
-# reference the content table directly.
+# This file provides a general interface to complete database
+# operations. It could be used for any project.
 
-# Table 1:
-# Song ID:      int
-# Song Name:    str
-# Artist:       str
-
-# Table 2:
-# Content ID:   int
-# Content:      str (filepath or link)
-# Song ID:      int 
-
-# A song name should be provided for access to any particular record
-# The other options are optional unless multiple songs have the same name.
-
-# Initialize the DB with the required structure
-# If it exists, check for correct structure
-def initialize_DB(db_filepath):
+# Create a database connection
+# :param db_filepath: database file path
+# :return: Connection object or None
+def create_connection(db_filepath):
     conn = None
-    logging.debug("Initializing database.")
     try:
         conn = sqlite3.connect(db_filepath)
-        print(sqlite3.version)
+
+        # Completion Output (for testing)
+        # print(sqlite3.version)
     except Error as e:
         print(e)
-    finally:
-        if conn:
-            logging.debug("Database initialized.")
-            conn.close()
 
-# Add a record to the database
-def add_record(song, artist=None, content=None):
-    logging.info("Adding a record")
+    return conn
 
-# Edit a record in the database
-def edit_record(oldSong, oldArtist=None, oldContent=None, newSong=None, newArtist=None, newContent=None):
-    logging.info("Editing a record")
+# Execute a statement
+# :param conn: Connection Object
+# :param command: An SQL statement to run
+def execute(conn, command):
+    try:
+        cur = conn.cursor()
+        cur.execute(command)
+    except Error as e:
+        print(e)
+    return cur
 
-# Delete a record in the database
-def delete_record(song, artist=None, content=None):
-    logging.info("Deleting a record")
-
-# Display records with various search criteria.
-# Find a particular song, list the songs by an artist,  or both.
-def display_record(song=None, artist=None):
-    logging.info("Displaying a record") 
-
-# Return the links and filepaths related to a particular song
-def return_records(song=None, artist=None):
-    logging.info("Opening links of record") 
+# Execute a statement with variables
+# :param conn: Connection Object
+# :param command: An SQL statement to run
+# :param vars: a tuple to fill in the SQL statement vars
+def execute_with_vars(conn, command, vars):
+    try:
+        cur = conn.cursor()
+        cur.execute(command, vars)
+    except Error as e:
+        print(e)
+    return cur
